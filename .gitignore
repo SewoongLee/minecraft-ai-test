@@ -1,6 +1,10 @@
-Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/.gradle/
+# Temporary files
 Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/run/saves/TEMP_*
+Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/build/tmp/*
+
+Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/.gradle/
 Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/run/usercache.json
+Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/run/config/splash.properties
 
 *.log
 *.log.gz
