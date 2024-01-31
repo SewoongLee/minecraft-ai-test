@@ -1,2 +1,7 @@
 Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/.gradle/
-*.log
+Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/run/saves/TEMP_*
+Malmo-0.35.6-Windows-64bit_withBoost_Python3.6/Minecraft/run/usercache.json
+
+*.log.gz
+*.dat
+*.jar
