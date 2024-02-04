@@ -149,12 +149,12 @@ def getMissionXML(summary):
 
     </Mission>'''
 
-recordingsDirectory="FleeRecordings"
-try:
-    os.makedirs(recordingsDirectory)
-except OSError as exception:
-    if exception.errno != errno.EEXIST: # ignore error if already existed
-        raise
+# recordingsDirectory="FleeRecordings"
+# try:
+#     os.makedirs(recordingsDirectory)
+# except OSError as exception:
+#     if exception.errno != errno.EEXIST: # ignore error if already existed
+#         raise
 
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
