@@ -71,7 +71,7 @@ SIZE_X = 21
 SIZE_Y = 31
 SIZE_Z = 21
 
-SHOW_COMMANDS = False
+SHOW_COMMANDS = True
 
 class Enum(tuple): __getattr__ = tuple.index
 

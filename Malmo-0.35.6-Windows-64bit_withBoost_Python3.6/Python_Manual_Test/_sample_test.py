@@ -21,20 +21,18 @@ from __future__ import print_function
 # Tutorial sample #2: Run simple mission using raw XML
 
 from builtins import range
-import MalmoPython
+import MalmoPython 
 import os
 import sys
 import time
+import json
+import math
 
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
 else:
     import functools
     print = functools.partial(print, flush=True)
-
-# More interesting generator string: "3;7,44*49,73,35:1,159:4,95:13,35:13,159:11,95:10,159:14,159:6,35:6,95:6;12;"
-
-
 
 # Create default Malmo objects:
 
@@ -50,27 +48,15 @@ if agent_host.receivedArgument("help"):
     exit(0)
 
 # -- set up the mission -- #
-mission_file = './_chatgpt_test.xml'
+mission_file = f'./{os.path.splitext(os.path.basename(__file__))[0]}.xml'
 with open(mission_file, 'r') as f:
     print("Loading mission from %s" % mission_file)
     mission_xml = f.read()
     my_mission = MalmoPython.MissionSpec(mission_xml, True)
 
-# Attempt to start a mission:
-max_retries = 3
-for retry in range(max_retries):
-    try:
-        agent_host.startMission( my_mission, MalmoPython.MissionRecordSpec() )
-        break
-    except RuntimeError as e:
-        if retry == max_retries - 1:
-            print("Error starting mission:",e)
-            exit(1)
-        else:
-            time.sleep(2)
+agent_host.startMission( my_mission, MalmoPython.MissionRecordSpec() )
 
 # Loop until mission starts:
-print("Waiting for the mission to start ", end=' ')
 world_state = agent_host.getWorldState()
 while not world_state.has_mission_begun:
     print(".", end="")
@@ -78,18 +64,31 @@ while not world_state.has_mission_begun:
     world_state = agent_host.getWorldState()
     for error in world_state.errors:
         print("Error:",error.text)
-
 print()
 print("Mission running ", end=' ')
 
-# Loop until mission ends:
-while world_state.is_mission_running:
-    print(".", end="")
-    time.sleep(0.1)
-    world_state = agent_host.getWorldState()
-    for error in world_state.errors:
-        print("Error:",error.text)
+def sendCommand(cmd):
+    DELAY = .5
+    time.sleep(DELAY)
+    agent_host.sendCommand(cmd)
+    print(cmd)
+    time.sleep(DELAY)
 
-print()
-print("Mission ended")
-# Mission has ended.
+# while True:
+#     cmd = input("Enter command: ")
+#     sendCommand(cmd)
+
+sendCommand("use")
+sendCommand("moveeast")
+sendCommand("use")
+sendCommand("movewest")
+sendCommand("attack")
+sendCommand("movesouth")
+sendCommand("movenorth")
+sendCommand("jumpeast")
+sendCommand("jumpwest")
+sendCommand("jumpsouth")
+sendCommand("jumpnorth")
+sendCommand("look 1")
+sendCommand("look -1")
+sendCommand("look 1")
