@@ -1,3 +1,21 @@
+You have enough blocks in your hands. You can only do the following:
+- "use" - place the block in front of you.
+- "movenorth" - move one block north.
+- "moveeast" - move one block east.
+- "movesouth" - move one block south.
+- "movewest" - move one block west.
+- "attack" - destroy the block in front of you.
+
+For example, to place a block in a small 'v' shape, you need to ['use'] directly in front, then for the upper right, use ['moveeast', 'movenorth', 'use'], then return with ['movesouth', 'movewest'], and for the upper left, use ['movewest', 'movenorth', 'use']. Thus, the final sequence of actions would be: 'build_v' = ['use', 'moveeast', 'movenorth', 'use', 'movesouth', 'movewest', 'movewest', 'movenorth', 'use'].
+
+If you want to destroy the 'v' shape, you can do so by following the reverse order and opposite direction from the last position as follows: 'destroy_v' = ['attack', 'movesouth', 'moveeast', 'moveeast', 'movenorth', 'attack', 'movesouth', 'movewest', 'attack'].
+
+Pay attention to the relationship between build_v and destroy_v. If you understand, answer 'Understood'.
+
+What sequence of actions would place a V-shaped block?
+
+If you understand, answer 'Understood'.
+
 use
 moveeast
 movenorth
