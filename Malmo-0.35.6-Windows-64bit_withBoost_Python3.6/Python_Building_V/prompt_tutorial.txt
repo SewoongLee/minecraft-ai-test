@@ -1,0 +1,8 @@
+You can only do one of the following actions:
+- "use": place the block in your position.
+- "movenorth": move one block north.
+- "moveeast": move one block east.
+- "movesouth": move one block south.
+- "movewest": move one block west.
+- "attack": destroy the block in your position.
+If you understand, answer "Understood."

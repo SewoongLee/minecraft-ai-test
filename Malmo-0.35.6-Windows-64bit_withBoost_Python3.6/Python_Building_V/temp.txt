@@ -1,0 +1,37 @@
+use
+moveeast
+movenorth
+use
+movewest
+movewest
+use
+
+What sequence of actions would place a V-shaped block in the form of a staircase with two steps each on the left and right?
+
+- "use" - place the held block item on the block face that has focus.
+
+
+Finally, you need to tell such as: ['use', 'movewest', 'movenorth', 'use', ... ]
+
+What is the sequence of actions for placing staircase with 2 left and 2 right shaped blocks?
+
+What is the sequence of actions to place a v-shaped block of length 2?
+
+Sequence of actions for placing a v-shaped block of length 2
+
+Sequence the actions to create a v-shaped block of length 2.
+
+List the actions in order to create a v-shaped block
+
+What is the sequence of actions to construct a V-shaped block?
+
+
+- "jumpnorth" - move the agent one block up and north.
+- "jumpeast" - move the agent one block up and east.
+- "jumpsouth" - move the agent one block up and south.
+- "jumpwest" - move the agent one block up and west.
+
+
+chatgpt = ChatGPT()
+chatgpt.send('Tell me a three-line poem.')
+chatgpt.close()

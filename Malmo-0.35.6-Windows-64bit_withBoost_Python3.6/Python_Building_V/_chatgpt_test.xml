@@ -12,12 +12,13 @@
         <StartTime>6000</StartTime>
         <AllowPassageOfTime>false</AllowPassageOfTime>
       </Time>
+      <Weather>clear</Weather>
     </ServerInitialConditions>
     <ServerHandlers>
       <!-- <DefaultWorldGenerator /> -->
-      <FlatWorldGenerator generatorString="3;7,80;1;" forceReset="true"/>
+      <FlatWorldGenerator generatorString="3;7,80;1;" forceReset="true" />
       <!-- <DrawingDecorator> -->
-        <!-- <DrawBlock x="0" y="1" z="0" type="redstone_block" /> -->
+      <!-- <DrawBlock x="0" y="1" z="0" type="redstone_block" /> -->
       <!-- </DrawingDecorator> -->
       <ServerQuitWhenAnyAgentFinishes />
     </ServerHandlers>
@@ -26,16 +27,20 @@
   <AgentSection mode="Survival">
     <Name>MalmoTutorialBot</Name>
     <AgentStart>
-      <Placement x="0.5" y="5" z="0.5" yaw="180" pitch="60"/>
+      <Placement x="0.5" y="5" z="0.5" yaw="180" pitch="60" />
       <Inventory>
-          <InventoryItem slot="0" type="orange_shulker_box" quantity="64"/>
+        <InventoryItem slot="0" type="orange_shulker_box" quantity="64" />
       </Inventory>
     </AgentStart>
     <AgentHandlers>
       <ObservationFromFullStats />
-      <ObservationFromRay/>
+      <ObservationFromRay />
+      <VideoProducer viewpoint="1">
+        <Width>640</Width>
+        <Height>480</Height>
+      </VideoProducer>
       <!-- <ContinuousMovementCommands turnSpeedDegs="180" /> -->
-      <DiscreteMovementCommands autoFall="true" autoJump="true"/>
+      <DiscreteMovementCommands autoFall="true" autoJump="true" />
     </AgentHandlers>
   </AgentSection>
 </Mission>

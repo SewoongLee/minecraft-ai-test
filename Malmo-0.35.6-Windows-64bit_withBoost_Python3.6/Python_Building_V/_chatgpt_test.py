@@ -35,26 +35,15 @@ else:
     print = functools.partial(print, flush=True)
 
 # Create default Malmo objects:
-
 agent_host = MalmoPython.AgentHost()
-try:
-    agent_host.parse( sys.argv )
-except RuntimeError as e:
-    print('ERROR:',e)
-    print(agent_host.getUsage())
-    exit(1)
-if agent_host.receivedArgument("help"):
-    print(agent_host.getUsage())
-    exit(0)
+agent_host.parse( sys.argv )
 
 # -- set up the mission -- #
 mission_file = f'./{os.path.splitext(os.path.basename(__file__))[0]}.xml'
 with open(mission_file, 'r') as f:
     print("Loading mission from %s" % mission_file)
-    mission_xml = f.read()
-    my_mission = MalmoPython.MissionSpec(mission_xml, True)
-
-agent_host.startMission( my_mission, MalmoPython.MissionRecordSpec() )
+    my_mission = MalmoPython.MissionSpec(f.read(), True)
+agent_host.startMission(my_mission, MalmoPython.MissionRecordSpec() )
 
 # Loop until mission starts:
 world_state = agent_host.getWorldState()
@@ -63,43 +52,51 @@ while not world_state.has_mission_begun:
     time.sleep(0.1)
     world_state = agent_host.getWorldState()
     for error in world_state.errors:
-        print("Error:",error.text)
+        print("Error:", error.text)
 print()
-print("Mission running ", end=' ')
+print("Mission running")
 
 def sendCommand(cmd):
-    DELAY = .5
-    time.sleep(DELAY)
-    agent_host.sendCommand(cmd)
-    print(cmd)
-    time.sleep(DELAY)
+    time.sleep(.5); agent_host.sendCommand(cmd); time.sleep(.5)
 
-# while True:
-#     cmd = input("Enter command: ")
-#     sendCommand(cmd)
+from llm import *
+llm = LLM('chatgpt_35_turbo.exe')
+# response = llm.send('Who are you? What version are you? Please introduce yourself.')
 
-sendCommand("use")
-sendCommand("moveeast")
-sendCommand("use")
-sendCommand("movewest")
-sendCommand("attack")
-sendCommand("movesouth")
-sendCommand("movenorth")
-sendCommand("jumpeast")
-sendCommand("jumpwest")
-sendCommand("jumpsouth")
-sendCommand("jumpnorth")
-sendCommand("look 1")
-sendCommand("look -1")
-sendCommand("look 1")
+with open('prompt_tutorial.txt', 'r', encoding='utf-8') as file: content = file.read()
+response = llm.send(content)
 
-# Loop until mission ends:
-while world_state.is_mission_running:
-    print(".", end="")
-    time.sleep(1)
-    world_state = agent_host.getWorldState()
-    for error in world_state.errors:
-        print("Error:",error.text)
+def askLLM(prompt_command):
+    response = llm.send(prompt_command)
+
+    print('Parsing response...')
+    try:
+        # Extract the substring between '[' and ']' and evaluate it as a list
+        start_index = response.rfind('[')
+        end_index = response.rfind(']')
+        # Convert the string representation of the list to an actual list
+        if start_index == -1 or end_index == -1: raise ValueError
+        print(f'Parser: Found list of commands ({start_index}-{end_index})!')
+        cmds = eval(response[start_index:end_index+1])
+    except:
+        # Fine occurrences of commands in the response
+
+        import re
+        response = response.replace(' use ', '').replace(' Use ', '')  # Remove 'use' when it is used as a verb
+        splited = re.split(r'''[ .:\n\\'"]''', repr(response))
+        # print('response: ', splited)
+
+        COMMANDS = ['use', 'movenorth', 'moveeast', 'movesouth', 'movewest', 'attack']
+        cmds = [cmd.strip().lower() for cmd in splited if cmd.strip().lower() in COMMANDS]
+    
+    print(f'Parsed: {cmds}')
+    for cmd in cmds:
+        sendCommand(cmd)
+
+# askLLM('Build V.')
+askLLM('What sequence of actions would place a V-shaped block?')
+# askLLM('What sequence of actions would place a V-shaped block in the form of a staircase with two steps each on the left and right?')
+askLLM('Destroy V.')
 
 print()
 print("Mission ended")
